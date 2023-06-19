@@ -22,7 +22,6 @@ router.get('/search', async (req, res) => {
   const search = req.query.search;
   const list = await bookLookUpModel.findBook(search);
 
-
   res.render('bookLookUp', {
     nav: () => 'navbar',
     active: { bookLookUp: true },
@@ -30,4 +29,16 @@ router.get('/search', async (req, res) => {
     empty: list.length === 0
   });
 });
+
+
+router.post('/delete/:MaSach', async(req, res) => {
+  const book = {
+    MaSach: parseInt(req.params.MaSach)
+  }
+
+  await bookLookUpModel.del(book);
+
+  res.redirect('/bookLookUp');
+});
+
 module.exports = router;

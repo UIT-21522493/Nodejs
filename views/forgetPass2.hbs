@@ -224,5 +224,64 @@
 <!-- Popper.JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#togglePassword1').click(function (e) {
+            // toggle the type attribute
+            const type = $('#password1').attr('type') === 'password' ? 'text' : 'password';
+            $('#password1').attr('type', type);
+            // toggle the eye slash icon
+            $('#togglePassword1').toggleClass('fa-eye-slash');
+        });
 
+        $('#togglePassword2').click(function (e) {
+            // toggle the type attribute
+            const type = $('#password2').attr('type') === 'password' ? 'text' : 'password';
+            $('#password2').attr('type', type);
+            // toggle the eye slash icon
+            $('#togglePassword2').toggleClass('fa-eye-slash');
+        });
+
+        function alert(message, type, element) {
+            $(`.check${element}`).html('<div class="alert alert-' + type + ' d-flex align-items-center mt-1 alert-dismissible" role="alert"> <i class="fas fa-exclamation-triangle"></i> <div> ' + message + ' </div><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+        }
+
+        // Kiêm tra ràng buộc ở đăng nhập
+        var checkPass1 = 0, checkPass2 = 0;
+        $('.submit').prop('disabled', true);
+        $('#password1').keyup(function() {
+            if($(this).val().length != 0)
+            {
+                checkPass1 = 1;
+                $('.checkPass1').html('');
+                if(checkPass1 == 1 && checkPass2 == 1)
+                    $('.submit').prop('disabled', false);
+            }
+            else
+            {
+                checkPass1 = 0;
+                alert('Vui lòng điền mật khẩu mới!', 'danger', 'Pass1');
+                $('.submit').prop('disabled', true);
+            }
+        });
+        $('#password2').keyup(function() {
+            if($(this).val().length != 0)
+            {
+                checkPass2 = 1;
+                $('.checkPass2').html('');
+                if(checkPass1 == 1 && checkPass2 == 1)
+                    $('.submit').prop('disabled', false);
+            }
+            else
+            {
+                checkPass2 = 0;
+                alert('Vui lòng nhập lại mật khẩu mới!', 'danger', 'Pass2');
+                $('.submit').prop('disabled', true);
+            }
+        });
+
+        
+    });
+
+</script>
 </html>

@@ -195,6 +195,131 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
         integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
         crossorigin="anonymous"></script>
+       <script type="text/javascript">
+        $(document).ready(() => {
+            $(document).on('click', '.remove-book-button', () => {
+                const id = Number(event.target.id);
+                console.log(id);
+                $('#book' + id).remove();
+                const currentAmount = Number($('#current-amount').val());
+
+                for (let i = id + 1; i <= currentAmount; i++) {
+                    $("#" + i).prop("id", i - 1);
+                    $("#book" + i).prop("id", "book" + (i - 1));
+
+                    $("#name-book-" + i).prop("name", "nameBook" + (i - 1));
+                    $("#author-book-" + i).prop("name", "authorBook" + (i - 1));
+                    $("#type-book-" + i).prop("name", "typeBook" + (i - 1));
+                    $("#amount-book-" + i).prop("name", "amountBook" + (i - 1));
+                    $("#price-book-" + i).prop("name", "priceBook" + (i - 1));
+
+                    $("#name-book-" + i).prop("id", "name-book-" + (i - 1));
+                    $("#author-book-" + i).prop("id", "author-book-" + (i - 1));
+                    $("#type-book-" + i).prop("id", "type-book-" + (i - 1));
+                    $("#amount-book-" + i).prop("id", "amount-book-" + (i - 1));
+                    $("#price-book-" + i).prop("id", "price-book-" + (i - 1));
+                }
+
+                $('#current-amount').val(currentAmount - 1);
+                if ($('#current-amount').val() == 0) {
+                    $('#import-button').prop('disabled', true);
+                }
+            });
+            $('#confirmModalButton').on('click', function () {
+                const name = $('#name-book').val();
+                const author = $('#author-book').val();
+                const type = $('#type-book').val();
+                const amount = $('#amount-book').val();
+                const price = $('#price-book').val();
+                const currentAmount = Number($('#current-amount').val()) + 1;
+                $('#bookImportContent').append(`
+                        <tr id="book${currentAmount}">
+                            <td scope="row">${name}</td>
+                            <td>${author}</td>
+                            <td>${type}</td>
+                            <td>${amount}</td>
+                            <td>${price}</td>
+                            <td>
+                                <a class="remove-book-button btn btn-outline-danger" role="button" id="${currentAmount}">
+                                    <i class="fas fa-trash" aria-hidden="true" id="${currentAmount}"></i>
+                                </a>
+                            </td>
+                            <input type="hidden" id="name-book-${currentAmount}" name="nameBook${currentAmount}" value="${name}">
+                            <input type="hidden" id="author-book-${currentAmount}" name="authorBook${currentAmount}" value="${author}">
+                            <input type="hidden" id="type-book-${currentAmount}" name="typeBook${currentAmount}" value="${type}">
+                            <input type="hidden" id="amount-book-${currentAmount}" name="amountBook${currentAmount}" value="${amount}" min="1">
+                            <input type="hidden" id="price-book-${currentAmount}" name="priceBook${currentAmount}" value="${price}" min="1000">
+                        </tr>`
+                );
+                $('#current-amount').val(currentAmount);
+                $('#name-book').val("");
+                $('#author-book').val("");
+                $('#type-book').val("");
+                $('#amount-book').val("");
+                $('#price-book').val("");
+                if (currentAmount > 0) {
+                    $('#import-button').prop('disabled', false);
+                }
+            });
+            $('#MessageValidate').hide();
+            $('#confirmModalButton').prop('disabled', true);
+            $('#import-button').prop('disabled', true);
+
+           
+            function checkValidAmountBook() {
+                const amountBook = Number($('#amount-book').val());
+                if (amountBook < Number($('#min-import').val())) {
+                    return 0;
+                }
+                return 1;
+            }
+            
+            $('#amount-book').keyup(() => {
+                if (checkValidAmountBook() === 0) {
+                    $('#MessageValidate').html("Số lượng nhập tối thiểu là " + $('#min-import').val()) + "!";
+                    $('#MessageValidate').show(300);
+                }
+                else {
+                    $('#MessageValidate').hide();
+                }
+                checkValid();
+            });
+             $('#amount-book').change(() => {
+                if (checkValidAmountBook() === 0) {
+                    $('#MessageValidate').html("Số lượng nhập tối thiểu là " + $('#min-import').val()) + "!";
+                    $('#MessageValidate').show(300);
+                }
+                else {
+                    $('#MessageValidate').hide();
+                }
+                checkValid();
+            });
+            function checkValid() {
+                if ($('#name-book').val().length > 0
+                    && $('#author-book').val().length > 0
+                    && $('#type-book').val().length > 0
+                    && checkValidAmountBook() > 0
+                    && $('#price-book').val() > 0) {
+                    $('#confirmModalButton').prop('disabled', false);
+                }
+                else {
+                    $('#confirmModalButton').prop('disabled', true);
+                }
+            }
+            $('#name-book').keyup(checkValid);
+            $('#author-book').keyup(checkValid);
+            $('#type-book').keyup(checkValid);
+            $('#price-book').keyup(checkValid);
+            $('#price-book').change(checkValid);
+
+        });
+        {{#if alert}}
+        $('#informAddBookImport').modal('show');
+        {{/if}}
+        {{#if failedAlert }}
+        $('#informAddDebtFailed').modal('show');
+        {{/if}}
+    </script>
     </body>
 
 </html>

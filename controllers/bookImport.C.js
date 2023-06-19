@@ -69,8 +69,8 @@ router.post("/", async (req, res) => {
             bookId = (await bookModel.add(book)).MaSach;
         }
         const bookImportDetail = {
-            IdPhieuNhapSach: bookImportRes.MaPNS,
-            IdSach: bookId,
+            MaPNS: bookImportRes.MaPNS,
+            MaSach: bookId,
             SoLuong: book.LuongTon
         }
         await bookImportDetailModel.add(bookImportDetail);

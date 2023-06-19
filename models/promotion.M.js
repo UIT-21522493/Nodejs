@@ -35,8 +35,8 @@ class PromotionModel {
         return res;
     }
     async loadBookIdCondition(id) {
-        const condition = `WHERE "MaSach" = ${id}`;
-        const res = await db.loadCondition('ChiTietKhuyenMai', 'MaSach', condition)
+        const condition = `WHERE "MaKM" = ${id}`;
+        const res = await db.loadCondition('ChiTietKhuyenMai', 'MaCTKM', condition)
         return res;
     }
 

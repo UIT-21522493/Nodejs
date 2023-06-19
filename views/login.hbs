@@ -236,4 +236,54 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.min.js"></script>
 
+<script>
+    $(document).ready(function(){
+        $('#togglePassword').click(function (e) {
+            // toggle the type attribute
+            const type = $('#password').attr('type') === 'password' ? 'text' : 'password';
+            $('#password').attr('type', type);
+            // toggle the eye slash icon
+            $('#togglePassword').toggleClass('fa-eye-slash');
+        });
+
+        function alert(message, type, element) {
+            $(`.check${element}`).html('<div class="alert alert-' + type + ' d-flex align-items-center mt-1 alert-dismissible" role="alert"> <i class="fas fa-exclamation-triangle"></i> <div> ' + message + ' </div><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+        }
+
+        // Kiêm tra ràng buộc ở đăng nhập
+        var checkName = 0, checkPass = 0;
+        $('.submit').prop('disabled', true);
+        $('#username').keyup(function() {
+            if($(this).val().length != 0)
+            {
+                checkName = 1;
+                $('.checkName').html('');
+                if(checkName == 1 && checkPass == 1)
+                    $('.submit').prop('disabled', false);
+            }
+            else
+            {
+                checkName = 0;
+                alert('Vui lòng điền tên tài khoản!', 'danger', 'Name');
+                $('.submit').prop('disabled', true);
+            }
+        });
+        $('#password').keyup(function() {
+            if($(this).val().length != 0)
+            {
+                checkPass = 1;
+                $('.checkPass').html('');
+                if(checkName == 1 && checkPass == 1)
+                    $('.submit').prop('disabled', false);
+            }
+            else
+            {
+                checkPass = 0;
+                alert('Vui lòng điền mật khẩu!', 'danger', 'Pass');
+                $('.submit').prop('disabled', true);
+            }   
+        });
+    });
+
+</script>
 </html>

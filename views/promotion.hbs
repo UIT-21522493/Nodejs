@@ -211,4 +211,50 @@
 <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/fileinput.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/themes/fas/theme.min.js"></script>
 
+<script>
+    
+    $(document).ready( () => {
+        // Upload ảnh
+        $( function() {
+            $("#productImage").fileinput({
+                uploadUrl: "/images",
+                maxFileCount: 5,
+                allowedFileTypes: ['image'],    // allow only images
+                showCancel: true,
+                initialPreviewAsData: true,
+                overwriteInitial: false,
+                theme: 'fas',
+            });
+        });
+
+        function alertAdd(message, type, element) {
+            $(`.check${element}Add`).html('<div class="alert alert-' + type + ' d-flex align-items-center mt-1 alert-dismissible" role="alert"> <i class="fas fa-exclamation-triangle"></i> <div>' + message + '</div><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+        }
+
+        // Kiểm tra ràng buộc khi thêm sản phẩm
+        var checkNameAdd = 0;
+        $('.btn-add').prop('disabled', true);
+        $('.promotionNameAdd').keyup(function() {
+            if($(this).val().length != 0)
+            {
+                if($(this).val().length == 1) {
+                    checkNameAdd = 1;
+                    $('.checkNameAdd').html('');
+                    if(checkNameAdd == 1)
+                        $('.btn-add').prop('disabled', false);
+                } else {
+                    alertAdd('Vui lòng điền loại khuyến mãi là 0 hoặc 1!', 'danger', 'Name');
+                    $('.btn-add').prop('disabled', true);
+                }
+            }
+            else
+            {
+                checkNameAdd = 0;
+                alertAdd('Vui lòng điền loại khuyến mãi!', 'danger', 'Name');
+                $('.btn-add').prop('disabled', true);
+            }
+        });
+    })
+
+</script>
 </html>

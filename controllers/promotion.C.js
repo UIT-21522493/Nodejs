@@ -36,7 +36,7 @@ router.get('/', async(req, res) => {
 
     // Load các sách được ưu đãi và khuyến mãi
     for (let index = 0; index < list.length; index++) {
-        const bookId = await promotionModel.loadBookIdCondition(list[index].MaSach)
+        const bookId = await promotionModel.loadBookIdCondition(list[index].MaKM)
                 
         let book = new Array();
         for (let i = 0; i < bookId.length; i++) {
@@ -79,7 +79,7 @@ router.post('/add',  upload.array('promotionImage', 12), async(req, res) => {
     for (let i = 0; i < options.length; i++) {
         let promotionDetail = {
             MaSach: options[i],                 
-            MaKM: rs.Id
+            MaKM: rs.MaKM
         };
         await promotionDetailModel.add(promotionDetail);
     }

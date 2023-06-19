@@ -193,7 +193,7 @@
                             <div class="modal-body">
                                 <div class="form-group mb-2">
                                     Bạn thực sự muốn xóa <strong>Quy Định {{MaQD}}</strong>?
-                                    <input type="text" name="Id" value="{{MaQD}}" hidden />
+                                    <input type="text" name="MaQD" value="{{MaQD}}" hidden />
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -221,4 +221,83 @@
 <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/fileinput.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/themes/fas/theme.min.js"></script>
 
+<script>
+    $(document).ready( () => {
+        // Kiểm tra ràng buộc các ô được nhập
+        function alert(message, type, element) {
+            $(`.check${element}Edit`).html('<div class="alert alert-' + type + ' d-flex align-items-center mt-1 alert-dismissible" role="alert"> <i class="fas fa-exclamation-triangle"></i> <div>' + message + '</div><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+        }
+
+        function alertAdd(message, type, element) {
+            $(`.check${element}Add`).html('<div class="alert alert-' + type + ' d-flex align-items-center mt-1 alert-dismissible" role="alert"> <i class="fas fa-exclamation-triangle"></i> <div>' + message + '</div><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+        }
+
+        // Kiêm tra ràng buộc ở chỉnh sửa
+        var checkName = 0, checkValue = 0;
+        $('.regulationNameEdit').keyup(function() {
+            if($(this).val().length != 0)
+            {
+                checkName = 1;
+                $('.checkNameEdit').html('');
+                if(checkName == 1 && checkValue == 1)
+                    $('.btn-edit').prop('disabled', false);
+            }
+            else
+            {
+                checkName = 0;
+                alert('Vui lòng điền tên quy định!', 'danger', 'Name');
+                $('.btn-edit').prop('disabled', true);
+            }
+        });
+        $('.regulationValueEdit').keyup(function() {
+            if($(this).val().length != 0)
+            {
+                checkValue = 1;
+                $('.checkValueEdit').html('');
+                if(checkName == 1 && checkValue == 1)
+                    $('.btn-edit').prop('disabled', false);
+            }
+            else
+            {
+                checkValue = 0;
+                alert('Vui lòng điền giá trị của quy định!', 'danger', 'Value');
+                $('.btn-edit').prop('disabled', true);
+            }   
+        });
+
+        // Kiểm tra ràng buộc khi thêm sản phẩm
+        var checkNameAdd = 0, checkValueAdd = 0;
+        $('.btn-add').prop('disabled', true);
+        $('.regulationNameAdd').keyup(function() {
+            if($(this).val().length != 0)
+            {
+                checkNameAdd = 1;
+                $('.checkNameAdd').html('');
+                if(checkNameAdd == 1 && checkValueAdd == 1 )
+                    $('.btn-add').prop('disabled', false);
+            }
+            else
+            {
+                checkNameAdd = 0;
+                alertAdd('Vui lòng điền tên quy định!', 'danger', 'Name');
+                $('.btn-add').prop('disabled', true);
+            }
+        });
+        $('.regulationValueAdd').keyup(function() {
+            if($(this).val().length != 0)
+            {
+                checkValueAdd = 1;
+                $('.checkValueAdd').html('');
+                if(checkNameAdd == 1 && checkValueAdd == 1)
+                    $('.btn-add').prop('disabled', false);
+            }
+            else
+            {
+                checkValueAdd = 0;
+                alertAdd('Vui lòng điền giá trị của qui định!', 'danger', 'Value');
+                $('.btn-add').prop('disabled', true);
+            }   
+        });
+    })
+</script>
 </html>

@@ -25,7 +25,7 @@ router.post('/add', async(req, res) => {
         TinhTrangSuDung: (req.body.regulationUse === 'true')
     };
 
-    // console.log(regulation)
+    console.log(regulation)
     await regulationModel.add(regulation);
     
     res.redirect('/regulation');
@@ -48,7 +48,7 @@ router.post('/update/:MaQD', async(req, res) => {
 
 router.post('/delete/:MaQD', async(req, res) => {
     const regulation = {
-      MaQD: parseInt(req.params.MaQD)
+      MaQD: parseInt(req.params.MaQD),
     }
   
     await regulationModel.del(regulation);

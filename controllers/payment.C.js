@@ -21,7 +21,6 @@ router.post('/', async (req, res) => {
     }
     console.log(id, debt);
     await customerModel.updateDebt(id, debt);
-    
 
     const today = new Date();
     const dd = String(today.getDate()).padStart(2, '0');
@@ -30,7 +29,7 @@ router.post('/', async (req, res) => {
     const todayString = yyyy + '/' + mm + '/' + dd;
 
     const payment = {
-        IdKhachHang: Number(req.body.id),
+        MaKH: Number(req.body.id),
         NgayThuTien: todayString,
         SoTienThu: req.body.payInput
     };

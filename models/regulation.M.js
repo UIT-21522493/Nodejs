@@ -21,7 +21,7 @@ class RegulationModel {
     }
 
     async del(regulation) {
-        const ReguId = regulation.Id;
+        const ReguId = regulation.MaQD;
         const condition = `WHERE "MaQD" = ${ReguId}`;
         const res = await db.del(tbName, condition);
         return res;

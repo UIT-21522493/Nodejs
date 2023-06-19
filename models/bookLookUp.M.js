@@ -13,5 +13,12 @@ class BookLookUpModel {
         const res = await db.loadCondition(tbName, 'MaSach', condition);
         return res;
     }
+
+    async del(book) {
+        const BookId = book.MaSach;
+        const condition = `WHERE "MaSach" = ${BookId}`;
+        const res = await db.del(tbName, condition);
+        return res;
+    }
 }
 module.exports = new BookLookUpModel;

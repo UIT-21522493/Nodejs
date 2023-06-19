@@ -45,7 +45,7 @@
                                 <th scope="col"></th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="">
                             {{#each payments}}
                             {{#if this.TienNo}}
                             <tr>
@@ -56,7 +56,7 @@
                                 <td id="{{this.MaKH}}-debt">{{format_number this.TienNo}}</td>
                                 <td>
                                     <button type="button" style="border:none; padding: 0; background-color:transparent" class="payment-button" data-toggle="modal"
-                                        data-target="#lapPhieuThuTien" value={{this.Id}} >
+                                        data-target="#lapPhieuThuTien" value={{this.MaKH}} >
                                         <i class="fas fa-file-invoice-dollar" style="font-size: 20px;" aria-hidden=true></i>
                                     </button>
                                 </td>
@@ -110,6 +110,29 @@
         integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
         crossorigin="anonymous"></script>
     
+     <script type="text/javascript">
+        $(document).ready(function () {
+            $('.payment-button').on('click', function(){
+                $('#name-modal').text($('#' + $(this).val() + '-name' ).text());
+                $('#address-modal').text($('#' + $(this).val() + '-address' ).text());
+                $('#phone-number-modal').text($('#' + $(this).val() + '-phone-number' ).text());
+                $('#email-modal').text($('#' + $(this).val() + '-email').text());
+                $('#debt-modal').text($('#' + $(this).val() + '-debt').text());
+                $('#currentDebt').val($('#' + $(this).val() + '-debt').text());
+                $('#id').val($(this).val());
+            });
+            $('#confirm-button-modal').prop('disabled', true);
+            $('#payInput').keyup(function() {
+                if($(this).val() > 0) {
+                    $('#confirm-button-modal').prop('disabled', false);
+                }
+                else {
+                    $('#confirm-button-modal').prop('disabled', true);
+                }
+            });
+            
+        });
+    </script>
 </body>
 
 </html>
