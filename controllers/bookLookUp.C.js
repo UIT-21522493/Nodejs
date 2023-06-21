@@ -33,7 +33,8 @@ router.get('/search', async (req, res) => {
 
 router.post('/delete/:MaSach', async(req, res) => {
   const book = {
-    MaSach: parseInt(req.params.MaSach)
+    MaSach: parseInt(req.params.MaSach),
+    TenSach: req.body.TenSach
   }
 
   await bookLookUpModel.del(book);

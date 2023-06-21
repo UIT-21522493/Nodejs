@@ -19,7 +19,7 @@ module.exports = app => {
         return options.inverse(this);
       },
       format_number: function(value){
-        return numeral(parseInt(value)).format('0,0');
+        return numeral(parseInt(value)).format('0,0') + 'đ';
       },
       dateFormat: require('handlebars-dateformat')
     },
